@@ -1,5 +1,14 @@
-# CRUD API for Hotel Room Availability
-...
+# CRUD Users with Login System (Local Auth)
+
+This project is a comprehensive **user management system** that includes features such as **login**, **registration**, **logout**, and **CRUD operations for user data**. It implements **authorization** for certain routes **using JSON Web Tokens (JWT)**, providing secure access to protected endpoints.
+
+When a user **successfully logs in**, a **JWT is generated** and **set in the cookies**, with an **expiration time** of **1 day**. This ensures that authenticated users can access protected routes without having to repeatedly log in.
+
+**User data management involves hashing passwords** for security purposes, ensuring that **sensitive information** is **securely stored** in the database. The project uses **SQLite as the database engine** and leverages the ORM framework **GORM for database operations**, simplifying database interactions and improving code readability.
+
+To ensure code quality and reliability, the project **includes comprehensive testing** using **the Ginkgo** and **Gomega testing frameworks**. This helps identify and fix bugs early in the development process, ensuring a robust and stable user management system.
+
+Overall, this project provides a scalable and secure solution for managing user data, with features such as authentication, authorization, and data encryption, making it suitable for a wide range of web applications and services.
 
 ## project-starter
 - project-starter base structure command:
