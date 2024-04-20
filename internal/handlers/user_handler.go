@@ -266,18 +266,15 @@ func (uh *UserHandler) UserLogout(w http.ResponseWriter, r *http.Request) {
 }
 
 func (uh *UserHandler) validateUser(user models.User) error {
-	// Validate email format
 	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 	if !emailRegex.MatchString(user.Email) {
 		return errors.New("invalid email format")
 	}
 
-	// Validate minimum password length
 	if len(user.Password) < 8 {
 		return errors.New("password must be at least 8 characters long")
 	}
 
-	// Validate password composition (at least one uppercase, one lowercase, and one number)
 	hasUppercase := regexp.MustCompile(`[A-Z]`).MatchString(user.Password)
 	hasLowercase := regexp.MustCompile(`[a-z]`).MatchString(user.Password)
 	hasNumber := regexp.MustCompile(`[0-9]`).MatchString(user.Password)
