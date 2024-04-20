@@ -14,6 +14,8 @@ import (
 	"github.com/arizdn234/crud-users-with-login-system/internal/repository"
 )
 
+// this testing was problemmed with authorization
+
 var _ = Describe("User Handlers", func() {
 	var (
 		userHandler      *handlers.UserHandler
@@ -58,7 +60,7 @@ var _ = Describe("User Handlers", func() {
 		Expect(createdUser.Email).To(Equal(mockUserResponse.Email))
 	})
 
-	// Test AuthenticateUser (success)
+	// Test AuthenticateUser (valid)
 	It("should authenticate a user with valid credentials", func() {
 		loginData := models.User{
 			Email:    mockUserResponse.Email,
@@ -86,5 +88,22 @@ var _ = Describe("User Handlers", func() {
 		defer resp.Body.Close()
 
 		Expect(resp.StatusCode).To(Equal(http.StatusUnauthorized))
+	})
+
+	// Test UserRegister (valid)
+	It("should register a new user", func() {
+		userJSON, _ := json.Marshal(mockUserResponse)
+
+		resp, err := http.Post("http://localhost:8080/register", "application/json", bytes.NewBuffer(userJSON))
+		Expect(err).NotTo(HaveOccurred())
+		defer resp.Body.Close()
+
+		Expect(resp.StatusCode).To(Equal(http.StatusCreated))
+
+		var registeredUser models.User
+		err = json.NewDecoder(resp.Body).Decode(&registeredUser)
+		Expect(err).NotTo(HaveOccurred())
+		Expect(registeredUser.Name).To(Equal(mockUserResponse.Name))
+		Expect(registeredUser.Email).To(Equal(mockUserResponse.Email))
 	})
 })
